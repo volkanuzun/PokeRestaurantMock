@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "rJ5Jqr5ebKyEvdA4vQQaN7Ltpo6XMU8isCh8ZDKvwD/XUS8wSl9v7Etuw9XNd9UeDTOuGmvETOqMDgFixav4Kw==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\PokeRestaurant\\PokeRestaurant.Web\\PokeRestaurant.Web.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\volka\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512"
+  ],
+  "logs": []
+}
