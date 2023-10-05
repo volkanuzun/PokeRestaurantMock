@@ -1,0 +1,11 @@
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\bin\Debug\net7.0\PokeRestaurant.Data.deps.json
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\bin\Debug\net7.0\PokeRestaurant.Data.dll
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\bin\Debug\net7.0\PokeRestaurant.Data.pdb
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\PokeRestaurant.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\PokeRestaurant.Data.AssemblyInfoInputs.cache
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\PokeRestaurant.Data.AssemblyInfo.cs
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\PokeRestaurant.Data.csproj.CoreCompileInputs.cache
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\PokeRestaurant.Data.dll
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\refint\PokeRestaurant.Data.dll
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\PokeRestaurant.Data.pdb
+C:\Projects\PokeRestaurant\PokeRestaurant.Data\obj\Debug\net7.0\ref\PokeRestaurant.Data.dll
