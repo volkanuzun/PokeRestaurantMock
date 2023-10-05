@@ -1,0 +1,108 @@
+﻿@model PokeRestaurant.Web.ViewModels.Add2CartViewModel
+@{
+    ViewData["Title"] = "Poke Restaurant - Add to Cart";
+    Layout = "_OrderLayout";
+}
+<script type="text/javascript">
+    function checkToppingsCount() {
+        var inputElems = document.getElementsByName("ckbTopping");
+            count = 0;
+
+        for (var i = 0; i < inputElems.length; i++) {
+            if (inputElems[i].checked  == true) {
+                count++;
+                console.log("Count is:" + count);
+                
+            }           
+        }
+        if (count > 3) {
+            console.log("more than 3");
+            extra = count - 3;
+            console.log("extra is: " + extra);
+            extraFee = extra * 0.50;
+            console.log("extra fee is " + extraFee);
+
+            var priceSpan = document.getElementById("totalPrice");
+            var basePrice = document.getElementById("basePrice").value;
+            console.log("basePrice " + basePrice);
+
+            var currentPrice = parseFloat(basePrice);
+            currentPrice = currentPrice + extraFee;
+            console.log("new price: " + currentPrice);
+            priceSpan.textContent = currentPrice;
+        }
+        else {
+            var priceSpan = document.getElementById("totalPrice");
+            var basePrice = document.getElementById("basePrice").value;
+            console.log("basePrice " + basePrice);
+            priceSpan.textContent = basePrice;
+        }
+    }
+
+</script>
+
+
+
+<div class="section-title">
+    <h2>Menu</h2>
+    <p>Check Our Tasty Menu</p>
+
+</div>
+<div class="row">
+    <h4>Please select one of the base for your @Model.SelectedBaseItem.Name</h4>
+    <h5>Price: <span id="totalPrice">@Model.SelectedBaseItem.Price</span></h5>
+    <form method="POST" id="add2cartForm" name="add2cartForm" asp-controller="Home" asp-action="Add2Cart" role="form">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        @Html.AntiForgeryToken()
+        <input asp-for="@Model.SelectedBaseItemID" type="hidden" />
+        <input asp-for="@Model.SelectedBaseItem.Price" type="hidden" id="basePrice"/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control" for="BaseSelection">Select Protein(s)</label>
+                    <div style="margin:1em;">
+                        @foreach (var item in Model.ProteinItems)
+                        {
+                            <input type="checkbox" asp-for="@item.IsChecked" class="form-check-input" />
+                            <label class="form-check-label" asp-for="@item.IsChecked">
+                                @item.ProteinItem.Name
+                            </label>
+                            <input type="hidden" asp-for="@item.ProteinItem.ID" />
+                            <input type="hidden" asp-for="@item.ProteinItem.Name" />
+                            <br />
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control" for="BaseSelection">Select Topping(s) (after 3rd topping it is extra 50 cents for each)</label>
+                    <div style="margin:1em;">
+                        @foreach (var item in Model.ToppingItems)
+                        {
+                            <input type="checkbox" asp-for="@item.IsChecked" class="form-check-input" onclick="checkToppingsCount()" name="ckbTopping">
+                            <label class="form-check-label" asp-for="@item.IsChecked">
+                                @item.ToppingItem.Name
+                            </label>
+                            <input type="hidden" asp-for="@item.ToppingItem.ID" />
+                            <input type="hidden" asp-for="@item.ToppingItem.Name" />
+                            <br />
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="form-group">
+                <input type="submit" value="Next >" class="btn btn-primary">
+                <div class="submitting"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+

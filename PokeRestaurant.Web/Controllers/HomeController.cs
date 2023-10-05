@@ -64,9 +64,24 @@ namespace PokeRestaurant.Web.Controllers
             return View(vm);
         }
 
-        public async Task<IActionResult> Add2ToCart(int itemID)
+        [HttpGet]
+        public async Task<IActionResult> Add2Cart(int ID)
         {
-            return View();
+            //almost certain this reads from cache; so no database hits here
+            var menuItems = await GetMenuItems();
+            Add2CartViewModel vm = new Add2CartViewModel();
+            vm.ProteinItems = menuItems.Where(c => c.MenuItemType == Data.Abstract.MenuItemType.Protein).Select(c => new ProteinItemSelectionViewModel { IsChecked = false, ProteinItem = c }).ToList();
+            vm.ToppingItems = menuItems.Where(c => c.MenuItemType == Data.Abstract.MenuItemType.Toppings).Select(c => new ToppingItemSelectionViewModel { IsChecked = false, ToppingItem = c }).ToList();
+            vm.SelectedBaseItem = menuItems.Single(c => c.ID == ID);
+            vm.SelectedBaseItemID = ID;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>Add2Cart(Add2CartViewModel vm)
+        {
+            return View(vm);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

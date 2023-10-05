@@ -17,7 +17,7 @@
             <div class="col-lg-6 menu-item filter-starters">
                 <img src="~/assets/img/menu/@item.ImageName" class="menu-img" alt="@item.Description">
                 <div class="menu-content">
-                    <a asp-for="Home" asp-action="Add2ToCart" asp-route-id="@item.ID">@item.Name</a><span>$@item.Price</span>
+                    <a asp-for="Home" asp-action="Add2Cart" asp-route-id="@item.ID">@item.Name</a><span>$@item.Price</span>
                 </div>
                 <div class="menu-ingredients">
                     @item.Description
