@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿///<summary>
+/// <Author>Volkan Uzun</Author>
+/// <Date>10/04/2023</Date>
+///</summary>
+using Microsoft.AspNetCore.Mvc;
+using PokeRestaurant.Data.Entity;
+using PokeRestaurant.Web.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,37 +14,22 @@ namespace PokeRestaurant.Web.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
+        IDatabaseRepository _databaseRepository;
+
+        public MenuController(IDatabaseRepository databaseRepository)
+        {
+            this._databaseRepository = databaseRepository;
+        }
         // GET: api/<MenuController>
         [HttpGet]
         [ApiVersion("1.0")]
-        public IEnumerable<string> Get()
+        [ResponseCache(Location = ResponseCacheLocation.Any,Duration =2400)]
+        public IEnumerable<MenuItem> Get()
         {
-            return new string[] { "value1", "value2" };
+            var items = _databaseRepository.GetMenuItems();
+            return items;
         }
 
-        // GET api/<MenuController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<MenuController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<MenuController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<MenuController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

@@ -1,8 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model PokeRestaurant.Web.ViewModels.MenuViewModel
+@{
+    ViewData["Title"] = "Poke Restaurant";   
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+        <h2>Menu</h2>
+        <p>Check Our Tasty Menu</p>
+    </div>
+
+
+    <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+        @foreach(var item in Model.BaseItems)
+        {
+            <div class="col-lg-6 menu-item filter-starters">
+                <img src="~/assets/img/menu/@item.ImageName" class="menu-img" alt="@item.Description">
+                <div class="menu-content">
+                    <a asp-for="Home" asp-action="Add2ToCart" asp-route-id="@item.ID">@item.Name</a><span>$@item.Price</span>
+                </div>
+                <div class="menu-ingredients">
+                    @item.Description
+                </div>
+            </div>
+        }
+      
+
+    </div>
+
 </div>
