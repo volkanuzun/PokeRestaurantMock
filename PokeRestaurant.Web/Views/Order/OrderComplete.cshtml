@@ -1,0 +1,52 @@
+﻿@model PokeRestaurant.Web.ViewModels.OrderViewModel
+@{
+    ViewData["Title"] = "Poke Restaurant - Order is complete";
+    Layout = "_OrderLayout";
+}
+<div class="section-title">
+    <h2>Order Complete</h2>
+    <p>Thank you for ordering from our restaurant, your order is complete; please find the summary below.</p>
+
+</div>
+<div class="row">
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Base Item Name</th>
+            <th>Base Price</th>
+            <th class="text-right">Total Price</th>
+            <th class="text-right">Proteins</th>
+            <th class="text-right">Toppings</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Items)
+        {
+            <tr>
+                <td class="text-center">@line.BaseItemName</td>
+                <td class="text-left">@line.BaseItemPrice</td>
+                <td class="text-right">@line.TotalPrice</td>
+                <td class="text-right"> @String.Join(", ", line.Proteins)</td>
+                <td class="text-right">@String.Join(", ",line.Toppings)</td>
+            </tr>
+        }       
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.Items.Sum(c=>c.TotalPrice).ToString("c")
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">Order by:</td>
+            <td class="text-center">Email address:</td>
+            <td class="text-center" colspan="3">Address:</td>
+        </tr>
+        <tr>
+            <td class="text-left">@Model.Name</td>
+            <td class="text-left">@Model.EmailAddress</td>
+            <td class="text-left" colspan="3">@Model.DeliveryAddress</td>
+    </tfoot>
+</table>
+    </div>

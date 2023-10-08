@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1epQfsju2eKeEV/TST//FQgm1UzOyPs92kRdhMzpCNH1S5ENbXQzDMn70ynXxBR4Lo+KxNSdEk0PIOnGkGDV3w==",
+  "dgSpecHash": "KLr9PMdYEx8Vnqvr99aiKAsp1HOSAjzJlZhTK4H7h2wlU2C2aTc/sQ5bsxMWqM0ZeQojUbVvi+smMCXkA+pB0g==",
   "success": true,
   "projectFilePath": "C:\\Projects\\PokeRestaurant\\PokeRestaurant.Web\\PokeRestaurant.Web.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Users\\volka\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512",
     "C:\\Users\\volka\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\volka\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\volka\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\volka\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\volka\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\volka\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",

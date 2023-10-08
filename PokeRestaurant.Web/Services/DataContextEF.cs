@@ -19,7 +19,8 @@ namespace PokeRestaurant.Web.Services
 
         public virtual DbSet<MenuItem> MenuItems { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual DbSet<ShoppingCartLine> ShoppingCartLines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,7 +28,8 @@ namespace PokeRestaurant.Web.Services
 
             modelBuilder.Entity<MenuItem>().HasKey(mi => mi.ID);
             modelBuilder.Entity<Order>().HasKey(o=> o.ID);
-            modelBuilder.Entity<OrderItem>().HasKey(oi => oi.ID);
+            modelBuilder.Entity<ShoppingCart>().HasKey(oi => oi.ID);
+            modelBuilder.Entity<ShoppingCartLine>().HasKey(oi => oi.ID);    
         }
 
         

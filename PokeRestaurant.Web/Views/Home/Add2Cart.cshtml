@@ -4,37 +4,69 @@
     Layout = "_OrderLayout";
 }
 <script type="text/javascript">
-    function checkToppingsCount() {
-        var inputElems = document.getElementsByName("ckbTopping");
-            count = 0;
-
-        for (var i = 0; i < inputElems.length; i++) {
-            if (inputElems[i].checked  == true) {
+    
+    function onSubmit() {
+       
+        var ckbToppings = document.querySelectorAll("input[type='checkbox'][id^='ToppingItems_']");
+        var count = 0;
+        var message = "";
+        for (var i = 0; i < ckbToppings.length; i++) {
+            if (ckbToppings[i].checked == true) {
                 count++;
-                console.log("Count is:" + count);
-                
+            }
+        }
+     
+        if (count < 3) { 
+            message = "Please pick at least 3 toppings!\n";          
+        }
+      
+        var ckbProteins = document.querySelectorAll("input[type='checkbox'][id^='ProteinItems']")
+        count = 0;
+
+        for (var i = 0; i < ckbProteins.length; i++) { 
+            if (ckbProteins[i].checked == true) {
+                count++;
+            }
+        }
+        
+        if (count == 0) { 
+            message += "Please pick at least 1 protein!\n";
+        }
+
+        if(message!="")
+        {
+            alert(message);
+            return false;
+        }
+
+        return true;
+    }
+
+    function checkToppingsCount() {
+        var ckbToppings = document.querySelectorAll("input[type='checkbox'][id^='ToppingItems_']");
+            count = 0;
+        for (var i = 0; i < ckbToppings.length; i++) {
+            if (ckbToppings[i].checked == true) {
+                count++;                
             }           
         }
+      
         if (count > 3) {
-            console.log("more than 3");
             extra = count - 3;
-            console.log("extra is: " + extra);
             extraFee = extra * 0.50;
-            console.log("extra fee is " + extraFee);
-
+          
             var priceSpan = document.getElementById("totalPrice");
-            var basePrice = document.getElementById("basePrice").value;
-            console.log("basePrice " + basePrice);
+            var basePrice = document.getElementById("SelectedBaseItemPrice").value;
+           
 
             var currentPrice = parseFloat(basePrice);
             currentPrice = currentPrice + extraFee;
-            console.log("new price: " + currentPrice);
             priceSpan.textContent = currentPrice;
         }
         else {
             var priceSpan = document.getElementById("totalPrice");
-            var basePrice = document.getElementById("basePrice").value;
-            console.log("basePrice " + basePrice);
+
+            var basePrice = document.getElementById("SelectedBaseItemPrice").value;
             priceSpan.textContent = basePrice;
         }
     }
@@ -49,29 +81,30 @@
 
 </div>
 <div class="row">
-    <h4>Please select one of the base for your @Model.SelectedBaseItem.Name</h4>
-    <h5>Price: <span id="totalPrice">@Model.SelectedBaseItem.Price</span></h5>
+    <h4>Please select one of the base for your @Model.SelectedBaseItemName</h4>
+    <h5>Price: <span id="totalPrice">@Model.SelectedBaseItemPrice</span></h5>
     <form method="POST" id="add2cartForm" name="add2cartForm" asp-controller="Home" asp-action="Add2Cart" role="form">
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger" name="errorsDiv"></div>
         @Html.AntiForgeryToken()
         <input asp-for="@Model.SelectedBaseItemID" type="hidden" />
-        <input asp-for="@Model.SelectedBaseItem.Price" type="hidden" id="basePrice"/>
+        <input asp-for="@Model.SelectedBaseItemPrice" type="hidden"/>
+        <input asp-for="@Model.SelectedBaseItemName" type="hidden" />
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-control" for="BaseSelection">Select Protein(s)</label>
+                    <label class="form-control" for="BaseSelection">Select Protein(s) (Minimum 1)</label>
                     <div style="margin:1em;">
-                        @foreach (var item in Model.ProteinItems)
+                        @for(int i=0;i<Model.ProteinItems.Count;i++)
                         {
-                            <input type="checkbox" asp-for="@item.IsChecked" class="form-check-input" />
-                            <label class="form-check-label" asp-for="@item.IsChecked">
-                                @item.ProteinItem.Name
+                            <input type="checkbox" asp-for="@Model.ProteinItems[i].IsChecked" class="form-check-input" />
+                            <input type="hidden" asp-for="@Model.ProteinItems[i].ID" />
+                            <input type="hidden" asp-for="@Model.ProteinItems[i].Name"/>
+                            <label class="form-check-label" asp-for="@Model.ProteinItems[i].ID">
+                                @Model.ProteinItems[i].Name
                             </label>
-                            <input type="hidden" asp-for="@item.ProteinItem.ID" />
-                            <input type="hidden" asp-for="@item.ProteinItem.Name" />
                             <br />
-
                         }
+                      
                     </div>
                 </div>
             </div>
@@ -79,17 +112,17 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-control" for="BaseSelection">Select Topping(s) (after 3rd topping it is extra 50 cents for each)</label>
+                    <label class="form-control" for="BaseSelection">Select 3 Toppings (after 3rd topping it is extra 50 cents for each)</label>
                     <div style="margin:1em;">
-                        @foreach (var item in Model.ToppingItems)
+                        @for (int i = 0; i < Model.ToppingItems.Count; i++)
                         {
-                            <input type="checkbox" asp-for="@item.IsChecked" class="form-check-input" onclick="checkToppingsCount()" name="ckbTopping">
-                            <label class="form-check-label" asp-for="@item.IsChecked">
-                                @item.ToppingItem.Name
+                            <input type="checkbox" asp-for="@Model.ToppingItems[i].IsChecked" class="form-check-input" onclick="checkToppingsCount()">
+                            <input type="hidden" asp-for="@Model.ToppingItems[i].ID"/>
+                            <input type="hidden" asp-for="@Model.ToppingItems[i].Name"/>
+                            <label class="form-check-label" asp-for="@Model.ToppingItems[i].ID">
+                                @Model.ToppingItems[i].Name
                             </label>
-                            <input type="hidden" asp-for="@item.ToppingItem.ID" />
-                            <input type="hidden" asp-for="@item.ToppingItem.Name" />
-                            <br />
+                               <br />
 
                         }
                     </div>
@@ -98,7 +131,7 @@
         </div>
         <div class="col-md-12 mt-3">
             <div class="form-group">
-                <input type="submit" value="Next >" class="btn btn-primary">
+                <input type="submit" value="Next >" class="btn btn-primary" formnovalidate="formnovalidate" onclick="return onSubmit();">
                 <div class="submitting"></div>
             </div>
         </div>

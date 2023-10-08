@@ -3,29 +3,41 @@
 /// <Date>10/04/2023</Date>
 ///</summary>
 using PokeRestaurant.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace PokeRestaurant.Web.ViewModels
 {
     public class Add2CartViewModel
     {
-        
-        public MenuItem SelectedBaseItem { get; set; }
-        public List<ProteinItemSelectionViewModel>? ProteinItems { get; set; }
-        public List<ToppingItemSelectionViewModel>? ToppingItems { get; set; }
+
+        [Required]
         public int SelectedBaseItemID { get; set; }
+        [Required]
+        public List<ProteinItemSelectionViewModel>? ProteinItems { get; set; }
+        [Required]
+        public List<ToppingItemSelectionViewModel>? ToppingItems { get; set; }
+        [Required]
+        public string SelectedBaseItemName { get; set; }
+        [Required]
+        public decimal SelectedBaseItemPrice { get; set; }
 
 
     }
 
     public class ProteinItemSelectionViewModel
     {
-        public MenuItem ProteinItem { get; set; }
+        [Required]
+        public  string Name { get; set; }
+        [Required]
+        public int ID { get; set; }
+        [Required]
          public bool IsChecked { get; set; }
     }
 
     public class ToppingItemSelectionViewModel
     {
-        public MenuItem ToppingItem { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
         public bool IsChecked { get; set; }
     }
 }

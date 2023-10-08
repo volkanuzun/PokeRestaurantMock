@@ -101,7 +101,7 @@ namespace PokeRestaurant.Web.Helpers
             };
             MenuItem topCorn = new MenuItem()
             {
-                Name = "Mango",
+                Name = "Corn",
                 Description = "Fresh  Corn",
                 MenuItemType = Data.Abstract.MenuItemType.Toppings,
                 Price = 0.50m,

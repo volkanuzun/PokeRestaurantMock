@@ -14,9 +14,10 @@ namespace PokeRestaurant.Data.Entity
     /// We can use localization here; but for simplicity I am skipping it 
     /// (For Display names and error message, we can move to localization files)
     /// </remarks>
-    internal class Order : BaseEntity
+    public class Order : BaseEntity
     {
-        public List<OrderItem> Items { get; set; }
+        public ShoppingCart Cart { get; set; }
+        public int ShoppingCartID { get; set; }
 
         [Required(AllowEmptyStrings =false,ErrorMessage ="Name is required!")]
         [DataType(DataType.Text)]
@@ -41,5 +42,10 @@ namespace PokeRestaurant.Data.Entity
 
         public bool IsShipped { get; set; }
         public required decimal TotalCost { get; set; }
+
+        public Order()
+        {
+          
+        }
     }
 }

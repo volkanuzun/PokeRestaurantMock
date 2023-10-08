@@ -98,15 +98,20 @@ namespace PokeRestaurant.Web.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("ShoppingCartID")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ShoppingCartID");
+
                     b.ToTable("Orders", "PokeRestaurant");
                 });
 
-            modelBuilder.Entity("PokeRestaurant.Data.Entity.OrderItem", b =>
+            modelBuilder.Entity("PokeRestaurant.Data.Entity.ShoppingCart", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -120,24 +125,69 @@ namespace PokeRestaurant.Web.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("OrderID")
+                    b.HasKey("ID");
+
+                    b.ToTable("ShoppingCarts", "PokeRestaurant");
+                });
+
+            modelBuilder.Entity("PokeRestaurant.Data.Entity.ShoppingCartLine", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("BaseItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("BaseItemPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("BaseToppings")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAddedUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProteinToppings")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ShoppingCartID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("OrderID");
+                    b.HasIndex("ShoppingCartID");
 
-                    b.ToTable("OrderItems", "PokeRestaurant");
-                });
-
-            modelBuilder.Entity("PokeRestaurant.Data.Entity.OrderItem", b =>
-                {
-                    b.HasOne("PokeRestaurant.Data.Entity.Order", null)
-                        .WithMany("Items")
-                        .HasForeignKey("OrderID");
+                    b.ToTable("ShoppingCartLines", "PokeRestaurant");
                 });
 
             modelBuilder.Entity("PokeRestaurant.Data.Entity.Order", b =>
+                {
+                    b.HasOne("PokeRestaurant.Data.Entity.ShoppingCart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("PokeRestaurant.Data.Entity.ShoppingCartLine", b =>
+                {
+                    b.HasOne("PokeRestaurant.Data.Entity.ShoppingCart", null)
+                        .WithMany("Items")
+                        .HasForeignKey("ShoppingCartID");
+                });
+
+            modelBuilder.Entity("PokeRestaurant.Data.Entity.ShoppingCart", b =>
                 {
                     b.Navigation("Items");
                 });

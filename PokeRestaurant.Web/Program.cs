@@ -5,8 +5,9 @@
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
+using PokeRestaurant.Data.Entity;
 using PokeRestaurant.Web.Helpers;
+using PokeRestaurant.Web.Models;
 using PokeRestaurant.Web.Services;
 
 namespace PokeRestaurant.Web
@@ -22,8 +23,14 @@ namespace PokeRestaurant.Web
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddResponseCaching();
+            builder.Services.AddDistributedMemoryCache();
+            //this uses built-in memory cache, in a cluster please use sql cache or reddis
+            builder.Services.AddSession();
+            builder.Services.AddRazorPages();
+
 
             builder.Services.AddSingleton<IMemoryCache,MemoryCache>();
+            builder.Services.AddScoped(typeof(APICallHelper));
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?? throw new InvalidOperationException("Connection string is not found.");
             builder.Services.AddDbContext<DataContextEF>(options =>
@@ -32,6 +39,8 @@ namespace PokeRestaurant.Web
             }, ServiceLifetime.Transient);
 
             builder.Services.AddScoped<IDatabaseRepository, DatabaseService>();
+            builder.Services.AddScoped<ShoppingCart>(sp => SessionCart.GetCart(sp));
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             builder.Services.AddApiVersioning(o =>
             {
@@ -75,6 +84,8 @@ namespace PokeRestaurant.Web
             app.UseRouting();
             app.UseResponseCaching();
             app.UseAuthorization();
+            app.UseSession();
+
 
             app.MapControllerRoute(
                 name: "default",

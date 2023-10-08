@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PokeRestaurant.Data.Entity.ShoppingCartLine>
+@{
+    ViewData["Title"] = "Poke Restaurant - Shopping Cart";
+    Layout = "_OrderLayout";
+}
+
+<div class="section-title">
+    <h2>Shopping Cart</h2>
+    <p>Here is your cart</p>
+</div>
+<div class="row">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Base Item Name</th>
+                <th>Base Price</th>
+                <th class="text-right">Total Price</th>
+                <th class="text-right">Proteins</th>
+                <th class="text-right">Toppings</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var line in Model)
+            {
+                <tr>
+                    <td class="text-center">@line.BaseItemName</td>
+                    <td class="text-left">@line.BaseItemPrice</td>
+                    <td class="text-right">@line.TotalPrice</td>
+                    <td class="text-right"> @String.Join(", ", line.Proteins)</td>
+                    <td class="text-right">@String.Join(", ",line.Toppings)</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right">Total:</td>
+                <td class="text-right">
+                    @Model.Sum(c=>c.TotalPrice).ToString("c")
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="text-center">
+        <a class="btn btn-primary" href="/#menu">Continue shopping</a>
+        <a class="btn btn-primary" asp-action="Checkout" asp-controller="Order">
+            Checkout
+        </a>
+    </div>
+</div>
